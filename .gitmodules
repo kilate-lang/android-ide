@@ -1,0 +1,3 @@
+[submodule "kilatec"]
+	path = kilatec
+	url = https://github.com/trindadedev13/kilate

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Kilate-IDE</string>
+  <string name="text_projects">Projects</string>
+  <string name="text_project_name">Project name</string>
+  <string name="text_create_new_project">Create Project</string>
+  <string name="text_result">Result</string>
+  <string name="text_no_out">No Output</string>
+  <string name="text_error">Error</string>
+
+  <string name="common_word_save">Save</string>
+  <string name="common_word_cancel">Cancel</string>
+  <string name="common_word_delete">Delete</string>
+  <string name="common_word_duplicate">Duplicate</string>
+  <string name="common_word_collection">Collection</string>
+  <string name="common_word_detail">Detail</string>
+  <string name="common_word_create_new">Create new</string>
+  <string name="common_word_run">Run</string>
+  <string name="common_word_code">Code</string>
+  <string name="common_word_ok">Ok</string>
+  <string name="common_word_string">String</string>
+  <string name="common_word_integer">Integer</string>
+  <string name="common_word_boolean">Boolean</string>
+  <string name="common_word_create">Create</string>
+  <string name="common_word_loading">Loading</string>
+
+  <string name="w_fill_all_fields">Please fill in all fields</string>
+
+  <string name="title_popup_input_int_value">Enter Integer Value</string>
+  <string name="title_popup_input_str_value">Enter String Value</string>
+</resources>

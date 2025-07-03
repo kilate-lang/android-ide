@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical">
+  <HorizontalScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbars="none">
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="horizontal">
+      <ScrollView
+        android:id="@+id/line_scroll"
+        android:layout_width="25dp"
+        android:scrollbars="none"
+        android:layout_height="match_parent">
+        <TextView
+          android:id="@+id/line_numbers"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:paddingRight="4dp"
+          android:textSize="12sp"
+          android:gravity="end"
+          android:lineSpacingExtra="4dp"
+          tools:replace="android:textColor" />
+      </ScrollView>
+      <ScrollView
+        android:id="@+id/edit_scroll"
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <EditText
+          android:id="@+id/edit_text"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:paddingLeft="4dp"
+          android:background="@android:color/transparent"
+          android:textSize="12sp"
+          android:gravity="start"
+          android:inputType="textMultiLine"
+          android:lineSpacingExtra="4dp"
+          android:minLines="10"
+          android:maxLines="1000"
+          android:scrollbars="none"
+          tools:replace="android:textColor,android:textColorHint" />
+      </ScrollView>
+    </LinearLayout>
+  </HorizontalScrollView>
+</LinearLayout>
+
