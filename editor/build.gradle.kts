@@ -23,5 +23,5 @@ android {
 dependencies {
   implementation("androidx.constraintlayout:constraintlayout:2.2.0")
   implementation("com.google.android.material:material:1.13.0-alpha11")
-  implementation("androidx.appcompat:appcompat:1.7.0")
+  implementation("androidx.appcompat:appcompat:1.7.1")
 }
