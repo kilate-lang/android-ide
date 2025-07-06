@@ -9,6 +9,7 @@ public class KilateEditorDefaults {
   public static final List<KilateAutoCompleteItem> Suggestions =
       Arrays.asList(
           new KilateAutoCompleteItem("work", KilateAutoCompleteType.Keyword),
+          new KilateAutoCompleteItem("import", KilateAutoCompleteType.Keyword),
           new KilateAutoCompleteItem("var", KilateAutoCompleteType.Keyword),
           new KilateAutoCompleteItem("let", KilateAutoCompleteType.Keyword),
           new KilateAutoCompleteItem("return", KilateAutoCompleteType.Keyword),

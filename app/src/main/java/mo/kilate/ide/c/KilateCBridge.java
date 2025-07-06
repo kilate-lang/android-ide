@@ -1,6 +1,7 @@
 package mo.kilate.ide.c;
 
 import android.content.Context;
+import android.widget.Toast;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
@@ -16,8 +17,8 @@ public class KilateCBridge {
   }
 
   public final StringWriter runFile(final File file) {
-    executor.setCommands(
-        List.of(getBinaryFile(context).getAbsolutePath(), "run", file.getAbsolutePath()));
+    executor.setWorkingDirectory(new File(file.getParentFile().getAbsolutePath()));
+    executor.setCommands(List.of(getBinaryFile(context).getAbsolutePath(), "run", file.getName()));
     try {
       return executor.execute().getOut();
     } catch (final Exception e) {

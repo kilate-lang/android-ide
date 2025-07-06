@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.util.List;
+import mo.kilate.ide.io.File;
 
 public class Executor {
   protected final ProcessBuilder mProcessBuilder;
@@ -34,6 +35,11 @@ public class Executor {
 
   public final Executor setCommands(final List<String> commands) {
     mProcessBuilder.command(commands);
+    return this;
+  }
+
+  public final Executor setWorkingDirectory(final File file) {
+    mProcessBuilder.directory(file);
     return this;
   }
 
