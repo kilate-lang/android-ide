@@ -10,17 +10,17 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import java.io.Serializable;
 import mo.kilate.ide.R;
 import mo.kilate.ide.os.PermissionManager;
 import mo.kilate.ide.os.PermissionStatus;
 import mo.kilate.ide.os.PermissionType;
 import mo.kilate.ide.ui.components.dialog.ProgressDialog;
-import mo.kilate.ide.utils.EdgeToEdge;
 import mo.kilate.ide.utils.PrintUtil;
-import java.io.Serializable;
 import mo.kilate.ide.utils.StringUtil;
 
 @SuppressWarnings("DEPRECATION")
@@ -125,17 +125,46 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     startActivity(new Intent(this, activity));
   }
 
-  protected void openSimplePopup(final String title, final String message, final Runnable ok) {
-    new MaterialAlertDialogBuilder(this)
-        .setTitle(title)
-        .setMessage(message)
-        .setPositiveButton(
-            StringUtil.getString(R.string.common_word_ok),
-            (d, w) -> {
-              ok.run();
-              d.dismiss();
+  protected AlertDialog openSimplePopup(
+      final String title, final String message, final Runnable ok) {
+    var dialog =
+        new MaterialAlertDialogBuilder(this)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton(
+                StringUtil.getString(R.string.common_word_ok),
+                (d, w) -> {
+                  ok.run();
+                  d.dismiss();
+                })
+            .create();
+    dialog.show();
+    return dialog;
+  }
+
+  protected final void doWithProgress(final Runnable first) {
+    doWithProgress(() -> {}, first);
+  }
+
+  protected final void doWithProgress(final Runnable first, final Runnable second) {
+    doWithProgress(() -> {}, first, second);
+  }
+
+  protected final void doWithProgress(
+      final Runnable first, final Runnable second, final Runnable third) {
+    new Thread(
+            () -> {
+              try {
+                first.run();
+                Thread.sleep(250);
+                second.run();
+                Thread.sleep(250);
+                third.run();
+              } catch (InterruptedException e) {
+                openSimplePopup(StringUtil.getString(R.string.text_error), e.toString(), () -> {});
+              }
             })
-        .show();
+        .start();
   }
 
   @Nullable

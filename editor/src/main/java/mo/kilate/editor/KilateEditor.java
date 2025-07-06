@@ -16,7 +16,6 @@ import android.widget.TextView;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import mo.kilate.editor.R;
 import mo.kilate.editor.ac.KilateAutoCompleteItem;
 import mo.kilate.editor.ac.KilateAutoCompleteWindow;
 import mo.kilate.editor.cs.KilateColorKey;

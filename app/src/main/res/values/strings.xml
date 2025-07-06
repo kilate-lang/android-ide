@@ -7,6 +7,8 @@
   <string name="text_result">Result</string>
   <string name="text_no_out">No Output</string>
   <string name="text_error">Error</string>
+  <string name="text_saved">Saved</string>
+  <string name="text_exit_directy">Exit directly</string>
 
   <string name="common_word_save">Save</string>
   <string name="common_word_cancel">Cancel</string>
@@ -28,4 +30,7 @@
 
   <string name="title_popup_input_int_value">Enter Integer Value</string>
   <string name="title_popup_input_str_value">Enter String Value</string>
+  <string name="title_popup_want_save">You want save content to file?</string>
+  
+  <string name="msg_popup_want_save">The content will be saved permanentely in the file.</string>
 </resources>

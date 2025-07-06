@@ -3,9 +3,6 @@ package mo.kilate.ide.beans;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.Parcelable.Creator;
-import com.google.gson.annotations.Expose;
-import java.util.ArrayList;
-import mo.kilate.ide.utils.ParcelUtil;
 import mo.kilate.ide.utils.PrintUtil;
 
 public class ProjectBean extends BaseBean implements Parcelable {
@@ -19,7 +16,7 @@ public class ProjectBean extends BaseBean implements Parcelable {
           return new ProjectBean[size];
         }
       };
-      
+
   public String name;
 
   public ProjectBean() {}

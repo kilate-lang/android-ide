@@ -23,7 +23,7 @@ public class EditorState extends BaseBean implements Parcelable {
       };
 
   public ProjectBean project;
-  public File currentFile;  
+  public File currentFile;
 
   public EditorState() {}
 

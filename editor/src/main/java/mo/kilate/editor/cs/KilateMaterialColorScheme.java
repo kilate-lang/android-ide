@@ -3,7 +3,6 @@ package mo.kilate.editor.cs;
 import android.content.Context;
 import android.util.TypedValue;
 import androidx.core.content.ContextCompat;
-import mo.kilate.editor.R;
 
 public class KilateMaterialColorScheme extends KilateDefaultColorScheme {
 
@@ -15,10 +14,7 @@ public class KilateMaterialColorScheme extends KilateDefaultColorScheme {
     set(
         KilateColorKey.Background,
         getColorFromAttr(com.google.android.material.R.attr.colorSurface));
-    set(
-        KilateColorKey.Keyword,
-        getColorFromAttr(com.google.android.material.R.attr.colorPrimary)
-    );
+    set(KilateColorKey.Keyword, getColorFromAttr(com.google.android.material.R.attr.colorPrimary));
     set(KilateColorKey.Type, getColorFromAttr(com.google.android.material.R.attr.colorSecondary));
     set(
         KilateColorKey.Function,

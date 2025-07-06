@@ -2,17 +2,13 @@ package mo.kilate.ide.ui.activities.main.components;
 
 import android.content.Context;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-
+import java.util.Objects;
 import mo.kilate.ide.R;
 import mo.kilate.ide.beans.ProjectBean;
 import mo.kilate.ide.databinding.DialogCreateProjectBinding;
 import mo.kilate.ide.project.manage.ProjectManager;
-
-import java.util.Objects;
 
 public class CreateProjectDialog extends BottomSheetDialog {
   private final DialogCreateProjectBinding binding;

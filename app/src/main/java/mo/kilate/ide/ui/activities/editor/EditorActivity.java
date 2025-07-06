@@ -30,7 +30,7 @@ public class EditorActivity extends BaseAppCompatActivity {
       new OnBackPressedCallback(true) {
         @Override
         public void handleOnBackPressed() {
-          finish();
+          onBackPressedLogic();
         }
       };
 
@@ -65,17 +65,27 @@ public class EditorActivity extends BaseAppCompatActivity {
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
+    // Run button
     var runButton =
         menu.add(Menu.NONE, 0, Menu.NONE, StringUtil.getString(R.string.common_word_run));
     runButton.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
     runButton.setIcon(R.drawable.ic_mtrl_run);
+    // Save button
+    var saveButton =
+        menu.add(Menu.NONE, 1, Menu.NONE, StringUtil.getString(R.string.common_word_save));
+    saveButton.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+    saveButton.setIcon(R.drawable.ic_mtrl_save);
     return super.onCreateOptionsMenu(menu);
   }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem menuItem) {
-    if (menuItem.getItemId() == 0) {
+    int id = menuItem.getItemId();
+    if (id == 0) {
       runCode();
+      return true;
+    } else if (id == 1) {
+      save();
       return true;
     }
     return super.onOptionsItemSelected(menuItem);
@@ -114,40 +124,68 @@ public class EditorActivity extends BaseAppCompatActivity {
     binding.editor.setText(FileUtil.readFile(editorState.currentFile, false));
   }
 
+  private final void onBackPressedLogic() {
+    new MaterialAlertDialogBuilder(this)
+        .setTitle(StringUtil.getString(R.string.title_popup_want_save))
+        .setMessage(StringUtil.getString(R.string.msg_popup_want_save))
+        .setPositiveButton(
+            StringUtil.getString(R.string.common_word_save),
+            (d, w) -> {
+              save(() -> finish());
+            })
+        .setNegativeButton(StringUtil.getString(R.string.text_exit_directy), (d, w) -> finish())
+        .show();
+  }
+
   private final void save() {
-    // todo save code from editor
+    save(() -> {});
+  }
+
+  private final void save(final Runnable afterSave) {
+    showProgress();
+    doWithProgress(
+        () -> {
+          FileUtil.writeText(editorState.currentFile, binding.editor.getText().toString());
+          runOnUiThread(() -> getProgressDialog().getIndicator().setProgress(50, true));
+        },
+        () -> runOnUiThread(() -> getProgressDialog().getIndicator().setProgress(100, true)),
+        () ->
+            runOnUiThread(
+                () -> {
+                  toast(StringUtil.getString(R.string.text_saved) + '!');
+                  dismissProgress();
+                  afterSave.run();
+                }));
   }
 
   private final void runCode() {
     showProgress();
 
-    new Thread(
-            () -> {
-              try {
-                runOnUiThread(() -> getProgressDialog().getIndicator().setProgress(50, true));
-                Thread.sleep(250);
-                var kilateRunner = new KilateCBridge(this);
-                kilateRunner.runFile(editorState.currentFile);
-                runOnUiThread(() -> getProgressDialog().getIndicator().setProgress(100, true));
-                Thread.sleep(250);
-                runOnUiThread(
-                    () -> {
-                      new MaterialAlertDialogBuilder(this)
-                          .setTitle(StringUtil.getString(R.string.text_result))
-                          .setMessage(
-                              (kilateRunner.getOut().getBuffer().length() > 0)
-                                  ? kilateRunner.getOut().toString()
-                                  : kilateRunner.getErr().toString())
-                          .setPositiveButton(
-                              StringUtil.getString(R.string.common_word_ok), (d, w) -> d.dismiss())
-                          .show();
-                    });
-
-                runOnUiThread(() -> dismissProgress());
-              } catch (InterruptedException e) {
-                openSimplePopup(StringUtil.getString(R.string.text_error), e.toString(), () -> {});
-              }
-            })
-        .start();
+    final var kilateRunner = new KilateCBridge(this);
+    if (editorState.currentFile.checkIsModified(binding.editor.getText().toString())) {
+      final File file = new File(getCacheDir(), editorState.currentFile.getName());
+      FileUtil.writeText(file, binding.editor.getText().toString());
+      kilateRunner.runFile(file);
+    } else {
+      kilateRunner.runFile(editorState.currentFile);
+    }
+    doWithProgress(
+        () -> runOnUiThread(() -> getProgressDialog().getIndicator().setProgress(50, true)),
+        () -> runOnUiThread(() -> getProgressDialog().getIndicator().setProgress(100, true)),
+        () -> {
+          runOnUiThread(
+              () -> {
+                new MaterialAlertDialogBuilder(this)
+                    .setTitle(StringUtil.getString(R.string.text_result))
+                    .setMessage(
+                        (kilateRunner.getOut().getBuffer().length() > 0)
+                            ? kilateRunner.getOut().toString()
+                            : kilateRunner.getErr().toString())
+                    .setPositiveButton(
+                        StringUtil.getString(R.string.common_word_ok), (d, w) -> d.dismiss())
+                    .show();
+              });
+          runOnUiThread(() -> dismissProgress());
+        });
   }
 }
