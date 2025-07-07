@@ -83,6 +83,7 @@ public class KilateAutoCompleteAdapter extends RecyclerView.Adapter<KilateAutoCo
         suggestions.clear();
         suggestions.addAll(newList);
         notifyDataSetChanged();
+        
     }
 
     public void applyIcon(TextView icon, KilateAutoCompleteItem item){
@@ -107,6 +108,9 @@ public class KilateAutoCompleteAdapter extends RecyclerView.Adapter<KilateAutoCo
             case Variable:
                 color = Color.parseColor("#FFA500");
             break;    
+            case Snippet:
+                color = Color.BLACK;
+            break;
         }
         oval.setColor(color);
         icon.setBackgroundDrawable(oval);

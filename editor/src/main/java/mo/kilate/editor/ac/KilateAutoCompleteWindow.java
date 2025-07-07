@@ -40,7 +40,6 @@ public class KilateAutoCompleteWindow {
         adapter = new KilateAutoCompleteAdapter(context, new ArrayList<>());
         recyclerView.setAdapter(adapter);
 
-        // Necessário para dizer ao RecyclerView como organizar os itens
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         popupWindow =
@@ -63,7 +62,10 @@ public class KilateAutoCompleteWindow {
                 });
         adapter.setOnItemClickListener(item -> {
     if (item != null) {
-        replaceCurrentWord(item.getText());
+        switch(item.getType()){
+            case Snippet: replaceCurrentWord(item.getCode()); break;
+            default: replaceCurrentWord(item.getText()); break;
+        }
         popupWindow.dismiss();
     }
 });
