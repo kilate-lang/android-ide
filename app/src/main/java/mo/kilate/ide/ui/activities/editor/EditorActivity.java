@@ -56,6 +56,7 @@ public class EditorActivity extends BaseAppCompatActivity {
     getOnBackPressedDispatcher().addCallback(onBackPressedCallback);
     configureToolbar(binding.toolbar);
     configureEditor();
+    configureDrawer();
   }
 
   @Override
@@ -122,6 +123,12 @@ public class EditorActivity extends BaseAppCompatActivity {
     binding.editor.setColorScheme(new KilateMaterialColorScheme(this));
     binding.editor.setTypeface(Typeface.MONOSPACE);
     binding.editor.setText(FileUtil.readFile(editorState.currentFile, false));
+  }
+
+  /** Configures drawer */
+  private final void configureDrawer() {
+    binding.drawer.setDirectory(
+        new File(editorState.currentFile.getParentFile().getAbsolutePath()));
   }
 
   private final void onBackPressedLogic() {

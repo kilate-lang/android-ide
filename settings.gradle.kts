@@ -18,3 +18,4 @@ rootProject.name = "kilate-ide"
 
 include(":app")
 include(":editor")
+include(":treeview")

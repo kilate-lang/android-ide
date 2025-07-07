@@ -17,16 +17,7 @@ public class ProjectsViewModel extends ViewModel {
     var ogFiles = ProjectManager.getProjectsFile().listFiles();
     PrintUtil.print(ogFiles);
     if (ogFiles == null) return;
-    projects.setValue(toFiles(Arrays.asList(ogFiles)));
-  }
-
-  private final List<File> toFiles(final List<java.io.File> ogFiles) {
-    var toReturnList = new ArrayList<File>();
-    ogFiles.forEach(
-        ogFile -> {
-          toReturnList.add(new File(ogFile.getAbsolutePath()));
-        });
-    return toReturnList;
+    projects.setValue(File.toFiles(Arrays.asList(ogFiles)));
   }
 
   public final LiveData<List<File>> getProjects() {
