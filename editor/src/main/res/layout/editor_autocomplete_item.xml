@@ -1,32 +1,41 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:orientation="vertical">
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:gravity="center_vertical"
-    android:orientation="horizontal">
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_height="wrap_content"
+     android:layout_width="match_parent"
+     android:padding="8dp">
+
     <TextView
-      android:id="@+id/item_text"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:text="var"
-      android:textSize="18sp"
-      android:layout_weight="1"
-      android:focusable="false"
-      tools:replace="android:textColor,android:textColorHint" />
+         android:layout_height="30dp"
+         android:layout_width="30dp"
+         android:layout_centerVertical="true"
+         android:id="@+id/item_icon"
+         android:gravity="center" 
+         android:focusable="false"/>
+
     <TextView
-      android:id="@+id/item_type"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="keyword"
-      android:textSize="12sp"
-      android:paddingStart="8dp"
-      android:focusable="false"
-      tools:replace="android:textColor,android:textColorHint" />
-  </LinearLayout>
-</LinearLayout>
+         android:layout_height="wrap_content"
+         android:layout_width="wrap_content"
+         android:textSize="18sp"
+         android:layout_toRightOf="@id/item_icon"
+         android:layout_marginStart="10dp"
+         android:focusable="false"
+         android:id="@+id/item_text"
+         android:text="var"
+         tools:replace="android:textColor,android:textColorHint" />
+
+    <TextView
+         android:layout_height="wrap_content"
+         android:layout_width="wrap_content"
+         android:layout_below="@id/item_text"
+         android:textSize="12sp"
+         android:layout_toRightOf="@id/item_icon"
+         android:layout_marginStart="10dp"
+         android:focusable="false"
+         android:id="@+id/item_type"
+         android:text="keyword"
+         tools:replace="android:textColor,android:textColorHint" />
+
+</RelativeLayout>
