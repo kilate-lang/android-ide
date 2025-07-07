@@ -3,7 +3,6 @@ package mo.kilate.ide.ui.activities.main.project;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import mo.kilate.ide.io.File;
