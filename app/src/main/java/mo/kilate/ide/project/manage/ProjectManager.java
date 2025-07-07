@@ -46,6 +46,16 @@ public class ProjectManager extends Contextualizable {
   public static final void createProjectByBean(@NonNull final ProjectBean project) {
     var projectRootDir = new File(getProjectsFile(), project.name);
     FileUtil.makeDir(projectRootDir);
+    var projectMain = new File(projectRootDir, "src/main.klt");
+    FileUtil.makeDir(new File(projectMain.getParentFile().getAbsolutePath()));
+    FileUtil.writeText(
+        projectMain,
+        """
+    work main(): bool {
+      print -> "Hello, world!", "\\n"
+      return -> true
+    }
+    """);
   }
 
   /** Folder where all projects are stored */

@@ -117,7 +117,7 @@ public class EditorActivity extends BaseAppCompatActivity {
     if (editorState.currentFile == null) {
       editorState.currentFile =
           new File(
-              new File(ProjectManager.getProjectsFile(), editorState.project.name), "main.klt");
+              new File(ProjectManager.getProjectsFile(), editorState.project.name), "src/main.klt");
     }
     binding.editor.addSuggestions(KilateEditorDefaults.Suggestions);
     binding.editor.setColorScheme(new KilateMaterialColorScheme(this));
@@ -128,7 +128,7 @@ public class EditorActivity extends BaseAppCompatActivity {
   /** Configures drawer */
   private final void configureDrawer() {
     binding.drawer.setDirectory(
-        new File(editorState.currentFile.getParentFile().getAbsolutePath()));
+        new File(ProjectManager.getProjectsFile(), editorState.project.name));
   }
 
   private final void onBackPressedLogic() {
