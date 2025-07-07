@@ -16,7 +16,6 @@ import mo.kilate.ide.databinding.LayoutFileNodeBinding;
 import mo.kilate.ide.databinding.LayoutFilesDrawerBinding;
 import mo.kilate.ide.io.File;
 import mo.kilate.ide.utils.DesignUtil;
-import mo.kilate.ide.utils.LayoutUtil;
 import mo.kilate.treeview.model.TreeNode;
 import mo.kilate.treeview.view.AndroidTreeView;
 

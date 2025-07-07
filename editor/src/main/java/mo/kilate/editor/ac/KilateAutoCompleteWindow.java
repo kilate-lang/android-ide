@@ -4,15 +4,9 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.Layout;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
@@ -21,123 +15,127 @@ import mo.kilate.editor.R;
 
 public class KilateAutoCompleteWindow {
 
-    private final PopupWindow popupWindow;
-    private final RecyclerView recyclerView;
-    private final EditText editText;
-    private final List<KilateAutoCompleteItem> allSuggestions = new ArrayList<>();
+  private final PopupWindow popupWindow;
+  private final RecyclerView recyclerView;
+  private final EditText editText;
+  private final List<KilateAutoCompleteItem> allSuggestions = new ArrayList<>();
 
-    private final KilateAutoCompleteAdapter adapter;
+  private final KilateAutoCompleteAdapter adapter;
 
-    public KilateAutoCompleteWindow(Context context, EditText editText) {
-        this.editText = editText;
+  public KilateAutoCompleteWindow(Context context, EditText editText) {
+    this.editText = editText;
 
-        final LayoutInflater inflater = LayoutInflater.from(context);
-        final ViewGroup layout =
-                (ViewGroup) inflater.inflate(R.layout.editor_autocomplete_popup, null);
+    final LayoutInflater inflater = LayoutInflater.from(context);
+    final ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.editor_autocomplete_popup, null);
 
-        recyclerView = layout.findViewById(R.id.suggestion_list);
+    recyclerView = layout.findViewById(R.id.suggestion_list);
 
-        adapter = new KilateAutoCompleteAdapter(context, new ArrayList<>());
-        recyclerView.setAdapter(adapter);
+    adapter = new KilateAutoCompleteAdapter(context, new ArrayList<>());
+    recyclerView.setAdapter(adapter);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+    recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-        popupWindow =
-                new PopupWindow(
-                        layout,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        false);
+    popupWindow =
+        new PopupWindow(
+            layout,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            false);
 
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.setFocusable(false);
-        popupWindow.setTouchable(true);
-        popupWindow.setBackgroundDrawable(null);
-        editText.post(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        popupWindow.setWidth(editText.getWidth());
-                    }
-                });
-        adapter.setOnItemClickListener(item -> {
-    if (item != null) {
-        switch(item.getType()){
-            case Snippet: replaceCurrentWord(item.getCode()); break;
-            default: replaceCurrentWord(item.getText()); break;
-        }
-        popupWindow.dismiss();
-    }
-});
-    }
-
-    public void addSuggestion(KilateAutoCompleteItem item) {
-        allSuggestions.add(item);
-    }
-
-    public void addSuggestions(List<KilateAutoCompleteItem> items) {
-        allSuggestions.addAll(items);
-    }
-
-    public List<KilateAutoCompleteItem> getSuggestions() {
-        return allSuggestions;
-    }
-
-    public void showIfMatches(final String currentWord) {
-        final List<KilateAutoCompleteItem> matches = new ArrayList<>();
-        for (final KilateAutoCompleteItem item : allSuggestions) {
-            if (item.getText().startsWith(currentWord) && !currentWord.isEmpty()) {
-                matches.add(item);
+    popupWindow.setOutsideTouchable(true);
+    popupWindow.setFocusable(false);
+    popupWindow.setTouchable(true);
+    popupWindow.setBackgroundDrawable(null);
+    editText.post(
+        new Runnable() {
+          @Override
+          public void run() {
+            popupWindow.setWidth(editText.getWidth());
+          }
+        });
+    adapter.setOnItemClickListener(
+        item -> {
+          if (item != null) {
+            switch (item.getType()) {
+              case Snippet:
+                replaceCurrentWord(item.getCode());
+                break;
+              default:
+                replaceCurrentWord(item.getText());
+                break;
             }
-        }
-
-        if (!matches.isEmpty()) {
-            adapter.update(matches);
-            showPopup();
-        } else {
             popupWindow.dismiss();
-        }
+          }
+        });
+  }
+
+  public void addSuggestion(KilateAutoCompleteItem item) {
+    allSuggestions.add(item);
+  }
+
+  public void addSuggestions(List<KilateAutoCompleteItem> items) {
+    allSuggestions.addAll(items);
+  }
+
+  public List<KilateAutoCompleteItem> getSuggestions() {
+    return allSuggestions;
+  }
+
+  public void showIfMatches(final String currentWord) {
+    final List<KilateAutoCompleteItem> matches = new ArrayList<>();
+    for (final KilateAutoCompleteItem item : allSuggestions) {
+      if (item.getText().startsWith(currentWord) && !currentWord.isEmpty()) {
+        matches.add(item);
+      }
     }
 
-    public void dismiss() {
-        popupWindow.dismiss();
+    if (!matches.isEmpty()) {
+      adapter.update(matches);
+      showPopup();
+    } else {
+      popupWindow.dismiss();
     }
+  }
 
-    private final void showPopup() {
-        final int offset = editText.getSelectionStart();
-        final Layout layout = editText.getLayout();
-        if (layout == null) return;
+  public void dismiss() {
+    popupWindow.dismiss();
+  }
 
-        final int line = layout.getLineForOffset(offset);
-        final float x = layout.getPrimaryHorizontal(offset);
-        final int y = layout.getLineBottom(line);
+  private final void showPopup() {
+    final int offset = editText.getSelectionStart();
+    final Layout layout = editText.getLayout();
+    if (layout == null) return;
 
-        final int[] location = new int[2];
-        editText.getLocationOnScreen(location);
+    final int line = layout.getLineForOffset(offset);
+    final float x = layout.getPrimaryHorizontal(offset);
+    final int y = layout.getLineBottom(line);
 
-        final float popupX = location[0] + x;
-        final float popupY = location[1] + y;
+    final int[] location = new int[2];
+    editText.getLocationOnScreen(location);
 
-        if (!popupWindow.isShowing()) {
-            popupWindow.showAsDropDown(editText, (int) x, (int) y - editText.getHeight());
-        } else {
-            popupWindow.update((int) popupX, (int) popupY, -1, -1);
-        }
+    final float popupX = location[0] + x;
+    final float popupY = location[1] + y;
+
+    if (!popupWindow.isShowing()) {
+      popupWindow.showAsDropDown(editText, (int) x, (int) y - editText.getHeight());
+    } else {
+      popupWindow.update((int) popupX, (int) popupY, -1, -1);
     }
+  }
 
-    private final void replaceCurrentWord(String suggestion) {
-        final int cursorPos = editText.getSelectionStart();
-        final Editable text = editText.getText();
-        final int start = findWordStart(text.toString(), cursorPos);
-        text.replace(start, cursorPos, suggestion);
-        editText.setSelection(start + suggestion.length());
-    }
+  private final void replaceCurrentWord(String suggestion) {
+    final int cursorPos = editText.getSelectionStart();
+    final Editable text = editText.getText();
+    final int start = findWordStart(text.toString(), cursorPos);
+    text.replace(start, cursorPos, suggestion);
+    editText.setSelection(start + suggestion.length());
+  }
 
-    private final int findWordStart(String text, int cursor) {
-        int i = cursor - 1;
-        while (i >= 0 && Character.isLetterOrDigit(text.charAt(i))) {
-            i--;
-        }
-        return i + 1;
+  private final int findWordStart(String text, int cursor) {
+    int i = cursor - 1;
+    while (i >= 0 && Character.isLetterOrDigit(text.charAt(i))) {
+      i--;
     }
+    return i + 1;
+  }
 }

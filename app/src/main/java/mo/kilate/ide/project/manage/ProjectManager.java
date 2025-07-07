@@ -51,11 +51,11 @@ public class ProjectManager extends Contextualizable {
     FileUtil.writeText(
         projectMain,
         """
-    work main(): bool {
-      print -> "Hello, world!", "\\n"
-      return -> true
-    }
-    """);
+        work main(): bool {
+          print -> "Hello, world!", "\\n"
+          return -> true
+        }
+        """);
   }
 
   /** Folder where all projects are stored */

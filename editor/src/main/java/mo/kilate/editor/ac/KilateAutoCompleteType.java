@@ -5,5 +5,5 @@ public enum KilateAutoCompleteType {
   Function,
   Variable,
   Type,
-  Snippet 
+  Snippet
 }

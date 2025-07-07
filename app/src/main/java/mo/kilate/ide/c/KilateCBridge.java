@@ -1,7 +1,6 @@
 package mo.kilate.ide.c;
 
 import android.content.Context;
-import android.widget.Toast;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
