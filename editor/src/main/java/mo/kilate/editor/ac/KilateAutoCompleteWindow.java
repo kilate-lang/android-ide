@@ -136,14 +136,11 @@ public class KilateAutoCompleteWindow {
     final Editable text = editText.getText();
     final int wordStart = findWordStart(text.toString(), cursorPos);
 
-    // Localiza a posição do marcador {$C} dentro do snippet
     final int cursorInSnippet = snippet.indexOf("{$C}");
     final String cleanSnippet = snippet.replace("{$C}", "");
 
-    // Substitui a palavra atual pelo snippet limpo
     text.replace(wordStart, cursorPos, cleanSnippet);
 
-    // Calcula a nova posição do cursor após a substituição
     int newCursorPos = wordStart + (cursorInSnippet != -1 ? cursorInSnippet : cleanSnippet.length());
     editText.setSelection(newCursorPos);
 }
