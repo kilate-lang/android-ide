@@ -38,7 +38,7 @@ jobs:
         uses: gradle/actions/wrapper-validation@v4
 
       - name: Build KilateIDE Release
-        run: ruby build.rb -g
+        run: ruby build.rb -g -bls
 
       - name: Upload release APK
         uses: actions/upload-artifact@v4
