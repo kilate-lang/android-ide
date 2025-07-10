@@ -27,6 +27,7 @@ public class KilateEditorDefaults {
 
           // Functions
           new KilateAutoCompleteItem("print", KilateAutoCompleteType.Function),
+          new KilateAutoCompleteItem("system", KilateAutoCompleteType.Function),
 
           // Snippets
           new KilateAutoCompleteItem(
