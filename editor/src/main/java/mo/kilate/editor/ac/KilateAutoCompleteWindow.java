@@ -58,7 +58,7 @@ public class KilateAutoCompleteWindow {
           if (item != null) {
             switch (item.getType()) {
               case Snippet:
-                replaceCurrentWord(item.getCode());
+                replaceCurrentWordWithSnippet(item.getCode());
                 break;
               default:
                 replaceCurrentWord(item.getText());
@@ -123,12 +123,26 @@ public class KilateAutoCompleteWindow {
     }
   }
 
-  private final void replaceCurrentWord(String suggestion) {
+  private final void replaceCurrentWord(final String suggestion) {
     final int cursorPos = editText.getSelectionStart();
     final Editable text = editText.getText();
     final int start = findWordStart(text.toString(), cursorPos);
     text.replace(start, cursorPos, suggestion);
     editText.setSelection(start + suggestion.length());
+  }
+
+  private final void replaceCurrentWordWithSnippet(final String snippet) {
+    final int cursorPos = editText.getSelectionStart();
+    final Editable text = editText.getText();
+    final int wordStart = findWordStart(text.toString(), cursorPos);
+
+    final int cursorInSnippet = snippet.indexOf("{$C}");
+    final String cleanSnippet = snippet.replace("{$C}", "");
+
+    text.replace(wordStart, cursorPos, cleanSnippet);
+
+    int newCursorPos = wordStart + (cursorInSnippet != -1 ? cursorInSnippet : cleanSnippet.length());
+    editText.setSelection(newCursorPos);
   }
 
   private final int findWordStart(String text, int cursor) {
