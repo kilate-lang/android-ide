@@ -31,9 +31,9 @@ public class KilateEditorDefaults {
 
           // Snippets
           new KilateAutoCompleteItem(
-              "for", "for(var i = 0 i < count i++){\n\t\t{$C}\n}", KilateAutoCompleteType.Snippet),
+              "for", "for(var i = 0 i < count i++){\n    {$C}\n}", KilateAutoCompleteType.Snippet),
           new KilateAutoCompleteItem(
-              "while", "while(condition){\n\t\t{$C}\n}", KilateAutoCompleteType.Snippet),
+              "while", "while(condition){\n    {$C}\n}", KilateAutoCompleteType.Snippet),
           new KilateAutoCompleteItem(
-              "method", "work method(){\n\t\t{$C}\n}", KilateAutoCompleteType.Snippet));
+              "method", "work method(){\n    {$C}\n}", KilateAutoCompleteType.Snippet));
 }
