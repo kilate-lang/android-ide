@@ -16,8 +16,14 @@ public class KilateCBridge {
   }
 
   public final StringWriter runFile(final File file) {
-    executor.setWorkingDirectory(new File(file.getParentFile().getAbsolutePath()));
-    executor.setCommands(List.of(getBinaryFile(context).getAbsolutePath(), "run", file.getName()));
+    return runFile(new File(file.getParentFile().getAbsolutePath()), file);
+  }
+
+  public final StringWriter runFile(final File workingDir, final File file) {
+    executor.setWorkingDirectory(workingDir);
+    final String relativePath =
+        workingDir.toPath().toAbsolutePath().relativize(file.toPath().toAbsolutePath()).toString();
+    executor.setCommands(List.of(getBinaryFile(context).getAbsolutePath(), "run", relativePath));
     try {
       return executor.execute().getOut();
     } catch (final Exception e) {

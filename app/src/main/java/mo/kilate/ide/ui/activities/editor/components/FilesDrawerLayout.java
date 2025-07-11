@@ -22,6 +22,8 @@ import mo.kilate.treeview.view.AndroidTreeView;
 public class FilesDrawerLayout extends LinearLayout {
 
   private final LayoutFilesDrawerBinding binding;
+  private TreeNode.TreeNodeClickListener onFileClickListener;
+  private TreeNode.TreeNodeLongClickListener onNodeLongClickListener;
 
   public FilesDrawerLayout(final Context context) {
     this(context, null);
@@ -42,6 +44,8 @@ public class FilesDrawerLayout extends LinearLayout {
     tree.setDefaultAnimation(true);
     tree.setUse2dScroll(true);
     tree.setDefaultContainerStyle(R.style.Widget_KilateIDE_TreeNodeStyle, true);
+    tree.setDefaultNodeLongClickListener(onNodeLongClickListener);
+    tree.setDefaultNodeClickListener(onFileClickListener);
     return tree.getView();
   }
 
@@ -49,6 +53,18 @@ public class FilesDrawerLayout extends LinearLayout {
     binding.treeContainer.removeAllViews();
     final View treeView = createView(file);
     binding.treeContainer.addView(treeView);
+    return this;
+  }
+
+  public final FilesDrawerLayout setOnFileClickListener(
+      final TreeNode.TreeNodeClickListener onFileClickListener) {
+    this.onFileClickListener = onFileClickListener;
+    return this;
+  }
+
+  public final FilesDrawerLayout setOnNodeLongClickListener(
+      final TreeNode.TreeNodeLongClickListener onNodeLongClickListener) {
+    this.onNodeLongClickListener = onNodeLongClickListener;
     return this;
   }
 
@@ -94,6 +110,8 @@ public class FilesDrawerLayout extends LinearLayout {
                     }
                   }
                 });
+          } else {
+            childNode.setClickListener(onFileClickListener);
           }
           node.addChild(childNode);
         }

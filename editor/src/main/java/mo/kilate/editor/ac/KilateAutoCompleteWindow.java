@@ -46,13 +46,6 @@ public class KilateAutoCompleteWindow {
     popupWindow.setFocusable(false);
     popupWindow.setTouchable(true);
     popupWindow.setBackgroundDrawable(null);
-    editText.post(
-        new Runnable() {
-          @Override
-          public void run() {
-            popupWindow.setWidth(editText.getWidth());
-          }
-        });
     adapter.setOnItemClickListener(
         item -> {
           if (item != null) {
@@ -102,6 +95,13 @@ public class KilateAutoCompleteWindow {
   }
 
   private final void showPopup() {
+    editText.post(
+        new Runnable() {
+          @Override
+          public void run() {
+            popupWindow.setWidth(editText.getWidth());
+          }
+        });
     final int offset = editText.getSelectionStart();
     final Layout layout = editText.getLayout();
     if (layout == null) return;
@@ -141,7 +141,8 @@ public class KilateAutoCompleteWindow {
 
     text.replace(wordStart, cursorPos, cleanSnippet);
 
-    int newCursorPos = wordStart + (cursorInSnippet != -1 ? cursorInSnippet : cleanSnippet.length());
+    int newCursorPos =
+        wordStart + (cursorInSnippet != -1 ? cursorInSnippet : cleanSnippet.length());
     editText.setSelection(newCursorPos);
   }
 

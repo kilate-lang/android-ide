@@ -9,7 +9,8 @@
   <string name="text_error">Error</string>
   <string name="text_saved">Saved</string>
   <string name="text_exit_directy">Exit directly</string>
-
+  <string name="title_options">Options</string>
+  
   <string name="common_word_save">Save</string>
   <string name="common_word_cancel">Cancel</string>
   <string name="common_word_delete">Delete</string>
@@ -26,7 +27,12 @@
   <string name="common_word_create">Create</string>
   <string name="common_word_loading">Loading</string>
   <string name="common_word_files">Files</string>
-
+  <string name="common_word_open">Open</string>
+  <string name="common_word_close">Close</string>
+  <string name="common_word_close_others">Close others</string>
+  <string name="common_word_close_all">Close all</string>
+  <string name="common_word_name">Name</string>
+  
   <string name="w_fill_all_fields">Please fill in all fields</string>
 
   <string name="title_popup_input_int_value">Enter Integer Value</string>
@@ -34,4 +40,6 @@
   <string name="title_popup_want_save">You want save content to file?</string>
   
   <string name="msg_popup_want_save">The content will be saved permanentely in the file.</string>
+  <string name="msg_file_created">%s Created!</string>
+  <string name="msg_file_deleted">%s Deleted!</string>
 </resources>

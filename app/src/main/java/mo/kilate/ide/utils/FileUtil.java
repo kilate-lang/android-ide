@@ -100,4 +100,13 @@ public class FileUtil {
       e.printStackTrace();
     }
   }
+
+  public static boolean deleteRecursive(final File fileOrDir) {
+    if (fileOrDir.isDirectory()) {
+      for (java.io.File child : fileOrDir.listFiles()) {
+        deleteRecursive(new File(child.getAbsolutePath()));
+      }
+    }
+    return fileOrDir.delete();
+  }
 }

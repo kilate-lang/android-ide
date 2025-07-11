@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import mo.kilate.ide.beans.ProjectBean;
 import mo.kilate.ide.databinding.ActivityMainBinding;
 import mo.kilate.ide.ui.activities.editor.EditorActivity;
-import mo.kilate.ide.ui.activities.editor.EditorState;
 import mo.kilate.ide.ui.activities.main.components.CreateProjectDialog;
 import mo.kilate.ide.ui.activities.main.project.ProjectsAdapter;
 import mo.kilate.ide.ui.activities.main.project.ProjectsViewModel;
@@ -48,10 +47,8 @@ public class MainActivity extends BaseAppCompatActivity {
   }
 
   private void openProject(final ProjectBean project) {
-    final var editorState = new EditorState();
-    editorState.project = project;
     final var intent = new Intent(this, EditorActivity.class);
-    intent.putExtra("editor_state", editorState);
+    intent.putExtra("project_bean", project);
     startActivity(intent);
   }
 

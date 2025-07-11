@@ -101,6 +101,10 @@ public class KilateEditor extends LinearLayout {
             update(s);
           }
         });
+    editText.setOnFocusChangeListener(
+        (v, hasFocus) -> {
+          if (!hasFocus) autoCompleteWindow.dismiss();
+        });
   }
 
   public void setText(final String text) {

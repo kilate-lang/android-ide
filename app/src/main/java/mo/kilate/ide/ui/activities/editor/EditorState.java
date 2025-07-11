@@ -24,12 +24,23 @@ public class EditorState extends BaseBean implements Parcelable {
 
   public ProjectBean project;
   public File currentFile;
+  public int currentIndex;
 
   public EditorState() {}
 
   public EditorState(final Parcel parcel) {
     project = ParcelUtil.readParcelable(parcel, ProjectBean.class);
     currentFile = ParcelUtil.readSerializable(parcel, File.class);
+    currentIndex = parcel.readInt();
+  }
+
+  public EditorState(final File currentFile, final int currentIndex) {
+    this.currentIndex = currentIndex;
+    this.currentFile = currentFile;
+  }
+
+  public EditorState(final int currentIndex, final File currentFile) {
+    this(currentFile, currentIndex);
   }
 
   @Override
@@ -46,11 +57,13 @@ public class EditorState extends BaseBean implements Parcelable {
   public void writeToParcel(final Parcel parcel, int flags) {
     parcel.writeParcelable(project, flags);
     parcel.writeSerializable(currentFile);
+    parcel.writeInt(currentIndex);
   }
 
   @Override
   public void print() {
     project.print();
     PrintUtil.print(currentFile);
+    PrintUtil.print(currentIndex);
   }
 }
