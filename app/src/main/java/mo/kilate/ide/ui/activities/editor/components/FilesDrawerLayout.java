@@ -24,6 +24,7 @@ public class FilesDrawerLayout extends LinearLayout {
   private final LayoutFilesDrawerBinding binding;
   private TreeNode.TreeNodeClickListener onFileClickListener;
   private TreeNode.TreeNodeLongClickListener onNodeLongClickListener;
+  private File dir;
 
   public FilesDrawerLayout(final Context context) {
     this(context, null);
@@ -49,9 +50,10 @@ public class FilesDrawerLayout extends LinearLayout {
     return tree.getView();
   }
 
-  public final FilesDrawerLayout setDirectory(final File file) {
+  public final FilesDrawerLayout setDirectory(final File dir) {
+    this.dir = dir;
     binding.treeContainer.removeAllViews();
-    final View treeView = createView(file);
+    final View treeView = createView(dir);
     binding.treeContainer.addView(treeView);
     return this;
   }
@@ -66,6 +68,10 @@ public class FilesDrawerLayout extends LinearLayout {
       final TreeNode.TreeNodeLongClickListener onNodeLongClickListener) {
     this.onNodeLongClickListener = onNodeLongClickListener;
     return this;
+  }
+
+  public final FilesDrawerLayout refresh() {
+    return setDirectory(dir);
   }
 
   private final TreeNode createFileTree(File dir) {

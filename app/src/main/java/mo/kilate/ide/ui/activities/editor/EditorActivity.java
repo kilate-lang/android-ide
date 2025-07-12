@@ -336,6 +336,7 @@ public class EditorActivity extends BaseAppCompatActivity
                       FileUtil.writeText(file, "");
                     }
                     toast(getString(R.string.msg_file_created, file.getAbsolutePath()));
+                    binding.drawer.refresh();
                     ibs.dismiss();
                     obsd.dismiss();
                   })
@@ -351,6 +352,7 @@ public class EditorActivity extends BaseAppCompatActivity
           if (node.getAbsolute().exists()) {
             if (FileUtil.deleteRecursive(node.getAbsolute())) {
               toast(getString(R.string.msg_file_deleted, node.getAbsolute().getAbsolutePath()));
+              binding.drawer.refresh();
             }
           }
           obsd.dismiss();
